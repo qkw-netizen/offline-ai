@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "12000:12000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - OLLAMA_API_URL=http://ollama:11434/api
+    depends_on:
+      - ollama
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "12001:12001"
+    depends_on:
+      - backend
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    command: serve
+
+volumes:
+  ollama_data:
