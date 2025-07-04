@@ -6,11 +6,8 @@ from chromadb.utils import embedding_functions
 
 class MemoryService:
     def __init__(self):
-        # Create data directory if it doesn't exist
-        os.makedirs("data/chroma", exist_ok=True)
-        
-        # Initialize ChromaDB client with the new API
-        self.client = chromadb.PersistentClient(path="data/chroma")
+        # Use in-memory client to avoid schema issues
+        self.client = chromadb.Client()
         
         # Use default embedding function
         self.embedding_function = embedding_functions.DefaultEmbeddingFunction()
