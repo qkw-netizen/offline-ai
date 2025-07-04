@@ -166,6 +166,7 @@ Execute this task as a {task.role.value} and provide a detailed response."""
             artifacts={"agent_results": [r.dict() for r in results]}
         )
 
-def get_agent_service(memory_service: MemoryService = get_memory_service()):
+def get_agent_service():
     """Dependency injection for AgentService"""
+    memory_service = get_memory_service()
     return AgentService(memory_service)

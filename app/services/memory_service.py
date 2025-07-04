@@ -2,19 +2,15 @@ from typing import Dict, Any, List, Optional
 import os
 import uuid
 import chromadb
-from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 
 class MemoryService:
     def __init__(self):
         # Create data directory if it doesn't exist
-        os.makedirs("data", exist_ok=True)
+        os.makedirs("data/chroma", exist_ok=True)
         
-        # Initialize ChromaDB client
-        self.client = chromadb.Client(Settings(
-            chroma_db_impl="duckdb+parquet",
-            persist_directory="data/chroma"
-        ))
+        # Initialize ChromaDB client with the new API
+        self.client = chromadb.PersistentClient(path="data/chroma")
         
         # Use default embedding function
         self.embedding_function = embedding_functions.DefaultEmbeddingFunction()
